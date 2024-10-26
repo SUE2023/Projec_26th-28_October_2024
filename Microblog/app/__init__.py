@@ -1,4 +1,4 @@
-#!/usr/venv python3
+#!/usr/env python3
 """ Make a package the directory"""
 from flask import Flask
 from config import Config
