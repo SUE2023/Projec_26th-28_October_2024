@@ -6,8 +6,15 @@ import sqlalchemy as sa
 from app import db
 from app.models import User
 from flask_login import logout_user
+from flask_login import login_required
 
 # ...
+@app.route('/')
+@app.route('/index')
+@login_required
+def index():
+    return render_template('index.html', title='Home', user=user, posts=posts)
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
