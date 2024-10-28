@@ -10,6 +10,8 @@ from flask_login import login_required
 from flask import request
 from urllib.parse import urlsplit
 from app.forms import RegistrationForm
+from datetime import datetime, timezone
+
 
 # ...
 @app.route('/')
@@ -17,6 +19,13 @@ from app.forms import RegistrationForm
 @login_required
 def index():
     return render_template('index.html', title='Home', posts=posts)
+
+
+@app.before_request
+def before_request():
+    if current_user.is_authenticated:
+        current_user.last_seen = datetime.now(timezone.utc)
+        db.session.commit()
 
 
 @app.route('/login', methods=['GET', 'POST'])
